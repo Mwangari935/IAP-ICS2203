@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>To-Do List</title>
+</head>
+<body>
+
+<form id="taskForm">
+    <input type="text" id="taskInput" placeholder="Enter task">
+    <button type="submit" id="submitButton" disabled>Submit</button>
+</form>
+
+<ul id="taskList">
+    <!-- Tasks will be added here -->
+</ul>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        // Query for elements
+        const submit = document.getElementById("submitButton");
+        const newTask = document.getElementById("taskInput");
+
+        // Listen for input to be typed into the input field
+        newTask.addEventListener("input", function () {
+            // Enable/disable submit button based on input field value
+            submit.disabled = newTask.value.trim() === "";
+        });
+
+        // Listen for submission of form
+        document.getElementById("taskForm").addEventListener("submit", function (event) {
+            event.preventDefault(); // Prevent default form submission
+
+            // Find the task the user just submitted
+            const taskValue = newTask.value.trim();
+
+            if (taskValue !== "") {
+                // Create a list item for the new task
+                const listItem = document.createElement("li");
+                listItem.textContent = taskValue;
+
+                // Add new element to our unordered list
+                document.getElementById("taskList").appendChild(listItem);
+
+                // Clear input field
+                newTask.value = "";
+
+                // Disable submit button after task is added
+                submit.disabled = true;
+            }
+
+            // Prevent default form submission
+            return false;
+        });
+    });
+</script>
+
+</body>
+</html>
